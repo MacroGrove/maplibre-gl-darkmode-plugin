@@ -1,0 +1,2 @@
+# maplibre-gl-darkmode-plugin
+ 
