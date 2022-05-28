@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
     <script src='https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.js'></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v0.10.0/mapbox-gl-language.js'></script>
     <link href='https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.css' rel='stylesheet' />
-    <script type='text/javascript' src='static/scripts/maplibre-gl-darkmode-plugin.js'></script>
+    <!-- <script type='text/javascript' src='static/scripts/maplibre-gl-darkmode-plugin.js'></script> -->
     <style type="text/css">
         body {
             margin: 0;
@@ -19,25 +20,57 @@
             width: 100%;
             height: 95%;
         }
+
+        button {
+            z-index: 1;
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            padding: 5px;
+        }
     </style>
 </head>
 
 <body>
-    <div id="map"></div>
+    <div id="map">
 
-    <script type="text/javascript">
-        let style = 'https://tiles.stadiamaps.com/styles/alidade_smooth.json';
-        let map = new maplibregl.Map({
-            container: 'map',
-            style: style, // stylesheet location
-            center: [-74.5, 40], // starting position [lng, lat]
-            zoom: 9 // starting zoom
-        });
+        <button id="mode" value="light">
+            Dark Mode
+        </button>
 
+        <script type="text/javascript">
+            // let style = 'https://tiles.stadiamaps.com/styles/alidade_smooth.json';
 
-        let mode = new MapLibreDarkMode();
-        map.addControl(mode, 'top-right')
-    </script>
+            let map = new maplibregl.Map({
+                container: 'map',
+                style: "https://tiles.stadiamaps.com/styles/alidade_smooth.json", // stylesheet location
+                center: [-74.5, 40], // starting position [lng, lat]
+                zoom: 9 // starting zoom
+            });
+
+            map.on('load', function () {
+                document.getElementById('mode')
+                    .addEventListener('click', function (event) {
+
+                        const style = event.target.value;
+
+                        let isLight = style === "light" ? true : false;
+
+                        if (isLight) {
+                            map.setStyle(`https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json`);
+                            event.target.value = "dark";
+                            event.target.textContent = "Light Mode";
+                        } else {
+                            map.setStyle(`https://tiles.stadiamaps.com/styles/alidade_smooth.json`);
+                            event.target.value = "light";
+                            event.target.textContent = "Dark Mode";
+                        }
+                    });
+            })
+
+        // let mode = new MapLibreDarkMode();
+        // map.addControl(mode, 'top-left');
+        </script>
 </body>
 
 </html>
