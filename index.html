@@ -6,6 +6,7 @@
     <script src='https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.js'></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v0.10.0/mapbox-gl-language.js'></script>
     <link href='https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.css' rel='stylesheet' />
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script type='text/javascript' src='static/scripts/maplibre-gl-darkmode-plugin.js'></script>
     <style type="text/css">
         body {
@@ -27,6 +28,10 @@
             top: 5px;
             left: 5px;
             padding: 5px;
+            min-width: 40px;
+            min-height: 40px;
+            border-radius: 50%;
+            border: 0px;
         }
     </style>
 </head>
@@ -45,9 +50,7 @@
         });
 
         let options = {
-            isLight: false,
-            lightTheme: 'https://tiles.stadiamaps.com/styles/osm_bright.json',
-            darkTheme: 'https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json'
+            isLight: true,
         }
 
         let darkMode = new MapLibreDarkMode(options);

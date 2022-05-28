@@ -27,32 +27,51 @@ class MapLibreDarkMode {
     changeMode() {
         console.log('Changing mode');
         let button = document.getElementById('dark-mode-btn');
+        let icon = document.getElementById('dark-mode-btn-icon');
 
         if (this.isLight) {
             console.log(`Dark Theme: ${this.darkTheme}`);
+
             map.setStyle(this.darkTheme);
+
+            icon.className = 'fa fa-lightbulb';
+
             button.value = "dark";
-            button.textContent = "Light Mode";
             this.isLight = false;
         } else {
             console.log(`Light Theme: ${this.lightTheme}`);
+
             map.setStyle(this.lightTheme);
+
+            icon.className = 'fa fa-moon';
+
             button.value = "light";
-            button.textContent = "Dark Mode";
             this.isLight = true;
         }
     }
 
-    addButton() {
-        let button = document.createElement('button');
-        button.className = 'maplibregl-ctrl';
-        button.id = 'dark-mode-btn';
+
+    addIcon() {
+        let icon = document.createElement('li');
+        icon.id = 'dark-mode-btn-icon';
 
         if (this.isLight) {
-            button.textContent = "Dark Mode";
+            icon.className = 'fa fa-moon';
+        } else {
+            icon.className = 'fa fa-lightbulb';
+        }
+
+        return icon;
+    }
+
+    addButton() {
+        let button = document.createElement('button');
+        button.id = 'dark-mode-btn';
+        button.className = 'maplibregl-ctrl';
+
+        if (this.isLight) {
             button.value = 'light';
         } else {
-            button.textContent = "Light Mode";
             button.value = 'dark';
         }
 
@@ -63,8 +82,12 @@ class MapLibreDarkMode {
         this._map = map;
         this._map.once('style.load', this.initialize);
 
+        this._icon = this.addIcon();
+
         this._button = this.addButton();
         this._button.addEventListener('click', this.changeMode)
+
+        this._button.appendChild(this._icon);
 
         return this._button;
     }
